@@ -1,7 +1,17 @@
-const express = require(express);
-
+const express = require('express');
+const mongoose = require('mongoose');
 const server = express();
 
+// DB Config
+const db = require('./config/keys').mongoURI;
+
+// Connect to mongoDB through mongoose
+mongoose
+	.connect(db, { useNewUrlParser: true })
+	.then(() => console.log('MongoDB Connect'))
+	.catch((err) => console.log(err));
+
+server.use(express.json());
 server.get('/', (req, res) => {
 	res.send({ message: 'server is alive' });
 });

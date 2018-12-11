@@ -5,6 +5,9 @@
   "main": "server.js",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.16.4",

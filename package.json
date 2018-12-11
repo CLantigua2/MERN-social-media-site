@@ -1,0 +1,20 @@
+{
+  "name": "devconnector",
+  "version": "1.0.0",
+  "description": "social network for developer",
+  "main": "server.js",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.3.15",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.8"
+  }
+}

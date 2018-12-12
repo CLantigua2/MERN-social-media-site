@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
@@ -15,10 +16,11 @@ mongoose
 	.then(() => console.log('MongoDB Connected'))
 	.catch((err) => console.log(err));
 
-server.use(express.json());
-server.get('/', (req, res) => {
-	res.send({ message: 'server is alive' });
-});
+// Passport middleware
+server.use(passport.initialize());
+
+// Passport Config
+require('./config/passport.js')(passport);
 
 //////// Use Routes /////////////
 server.use('/api/users', users);

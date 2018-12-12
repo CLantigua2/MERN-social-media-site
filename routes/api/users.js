@@ -16,9 +16,9 @@ const generateToken = (user) => {
 		name: user.name,
 		avatar: user.avatar
 	};
-	const secret = keys.jwtSECRET;
+	const secret = keys.secretOrKey;
 	const options = {
-		expiresIn: '1h'
+		expiresIn: 3600
 	};
 	return jwt.sign(payload, secret, options);
 };
@@ -29,21 +29,22 @@ router.get('/test', (req, res) => {
 
 // register a user with name, email, avatar if the account has one, password
 router.post('/register', (req, res) => {
-	User.findOne({ email: req.body.email })
+	const creds = req.body;
+	User.findOne({ email: creds.email })
 		.then((user) => {
 			if (user) {
 				return res.status(400).json({ email: 'Email already exists' });
 			} else {
-				const avatar = gravatar.url(req.body.email, {
+				const avatar = gravatar.url(creds.email, {
 					s: '200', //size
 					r: 'pg', // rating
 					d: 'mm' // Default
 				});
 				const newUser = new User({
-					name: req.body.name,
-					email: req.body.email,
+					name: creds.name,
+					email: creds.email,
 					avatar,
-					password: req.body.password
+					password: creds.password
 				});
 
 				//hash password
@@ -70,7 +71,6 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
-
 	// Find user by email with mongoose user model
 	User.findOne({ email }).then((user) => {
 		// Check for a user
@@ -82,10 +82,11 @@ router.post('/login', (req, res) => {
 			if (isMatch) {
 				// user matched
 				// create payload
-				// const payload = { id: user.id, name: user.name, avatar: user.avatar };
 				const token = generateToken(user);
-				// assign token
-				res.status(200).json({ message: 'welcome', token });
+				res.json({
+					success: true,
+					token: 'Bearer ' + token
+				});
 			} else {
 				return res.status(400).json({ message: 'credentials do not match' });
 			}
@@ -95,9 +96,9 @@ router.post('/login', (req, res) => {
 
 // returns current user based on token
 // will be set to private
-
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-	res.json({ message: 'Success' });
+	console.dir(req.header);
+	res.send({ message: 'Success' });
 });
 
 module.exports = router;

@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const morgan = require('morgan');
+const cors = require('cors');
+const helmet = require('helmet');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
@@ -18,9 +21,12 @@ mongoose
 
 // Passport middleware
 server.use(passport.initialize());
-
+server.use(express.json());
+server.use(helmet());
+server.use(cors());
+server.use(morgan('dev'));
 // Passport Config
-require('./config/passport.js')(passport);
+require('./config/passport')(passport);
 
 //////// Use Routes /////////////
 server.use('/api/users', users);

@@ -6,6 +6,9 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
+// Load Input Validation
+const validateRegisterInput = require('../../validation/register');
+
 // Load User Model
 const User = require('../../models/User');
 // generate web token
@@ -23,17 +26,24 @@ const generateToken = (user) => {
 	return jwt.sign(payload, secret, options);
 };
 
+/////// test the route
 router.get('/test', (req, res) => {
 	res.send(200).json({ message: 'Users works' });
 });
 
 // register a user with name, email, avatar if the account has one, password
 router.post('/register', (req, res) => {
+	const { errors, isValid } = validateRegisterInput(req.body);
+	// check validation
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}
 	const creds = req.body;
 	User.findOne({ email: creds.email })
 		.then((user) => {
 			if (user) {
-				return res.status(400).json({ email: 'Email already exists' });
+				errors.email = 'Email already exists';
+				return res.status(400).json(errors);
 			} else {
 				const avatar = gravatar.url(creds.email, {
 					s: '200', //size
@@ -96,9 +106,18 @@ router.post('/login', (req, res) => {
 
 // returns current user based on token
 // will be set to private
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-	console.dir(req.header);
-	res.send({ message: 'Success' });
-});
+router.get(
+	'/current',
+	passport.authenticate('jwt', {
+		session: false
+	}),
+	(req, res) => {
+		res.json({
+			id: req.user.id,
+			name: req.user.name,
+			email: req.user.email
+		});
+	}
+);
 
 module.exports = router;

@@ -8,6 +8,7 @@ const passport = require('passport');
 
 // Load Input Validation
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 // Load User Model
 const User = require('../../models/User');
@@ -79,13 +80,20 @@ router.post('/register', (req, res) => {
 
 /////// log in user
 router.post('/login', (req, res) => {
+	// validates input that comes through req.body
+	const { errors, isValid } = validateLoginInput(req.body);
+	// check validation
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}
 	const email = req.body.email;
 	const password = req.body.password;
 	// Find user by email with mongoose user model
 	User.findOne({ email }).then((user) => {
 		// Check for a user
 		if (!user) {
-			return res.status(404).json({ message: 'User not found' });
+			errors.email = 'User not found';
+			return res.status(404).json(errors);
 		}
 		// check Password
 		bcrypt.compare(password, user.password).then((isMatch) => {
@@ -98,7 +106,8 @@ router.post('/login', (req, res) => {
 					token: 'Bearer ' + token
 				});
 			} else {
-				return res.status(400).json({ message: 'credentials do not match' });
+				errors.password = 'Credentials do not match';
+				return res.status(400).json(errors);
 			}
 		});
 	});

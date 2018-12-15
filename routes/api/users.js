@@ -32,6 +32,9 @@ router.get('/test', (req, res) => {
 	res.send(200).json({ message: 'Users works' });
 });
 
+// @route   GET api/user/register
+// @desc    register a user
+// @access  Public
 // register a user with name, email, avatar if the account has one, password
 router.post('/register', (req, res) => {
 	const { errors, isValid } = validateRegisterInput(req.body);

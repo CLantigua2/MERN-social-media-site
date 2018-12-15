@@ -12,6 +12,33 @@ router.get('/test', (req, res) => {
 	res.send(200).json({ message: 'Posts works' });
 });
 
+// @route GET api/posts
+// @desc get post
+// @access Public
+router.get('/', (req, res) => {
+	Post.find()
+		.sort({ date: -1 })
+		.then((posts) => {
+			res.json(posts);
+		})
+		.catch((err) => {
+			res.status(404).json({ message: 'Could not retrieve posts', err });
+		});
+});
+
+// @route GET api/posts/:id
+// @desc get post by id
+// @access Public
+router.get('/:id', (req, res) => {
+	Post.findById(req.params.id)
+		.then((post) => {
+			res.json(post);
+		})
+		.catch((err) => {
+			res.status(404).json({ message: 'No post located with that id', err });
+		});
+});
+
 // @route POST api/posts
 // @desc Create post
 // @access Private
@@ -32,9 +59,5 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
 	newPost.save().then((post) => res.json(post));
 });
-
-// @route POST api/posts
-// @desc Create post
-// @access Private
 
 module.exports = router;

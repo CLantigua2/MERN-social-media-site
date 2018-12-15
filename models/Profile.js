@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 // Create Schema
 const ProfileSchema = new Schema({
 	user: {
-		type: Schema.Types.ObjectId,
-		ref: 'users'
+		type: Schema.Types.ObjectId, // ref back to user by id
+		ref: 'users' // points to user table
 	},
 	handle: {
 		type: String,

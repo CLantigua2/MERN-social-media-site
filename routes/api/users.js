@@ -81,6 +81,9 @@ router.post('/register', (req, res) => {
 		});
 });
 
+// @route   GET api/user/login
+// @desc    Post user creds to login
+// @access  Public
 /////// log in user
 router.post('/login', (req, res) => {
 	// validates input that comes through req.body

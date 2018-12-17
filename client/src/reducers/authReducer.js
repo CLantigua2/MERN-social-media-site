@@ -1,3 +1,4 @@
+// this reducer will handle user authentication
 const initialState = {
 	isAuthenticated: false,
 	user: {}

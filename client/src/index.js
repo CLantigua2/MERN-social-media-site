@@ -9,6 +9,7 @@ import store from './redux/store';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './redux/actions/authActions';
+import { clearCurrentProfile } from './redux/actions/profileActions';
 
 // Check for token
 if (localStorage.jwt) {
@@ -24,7 +25,8 @@ if (localStorage.jwt) {
 	if (decoded.exp < currentTime) {
 		// logout user
 		store.dispatch(logoutUser());
-		// TODO: Clear current profile
+		// Clear current profile
+		store.dispatch(clearCurrentProfile());
 		// Redirect to login
 		window.location.href = '/login';
 	}

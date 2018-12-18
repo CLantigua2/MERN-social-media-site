@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
 import { connect } from 'react-redux'; // connects component to store
 import { registerUser } from '../../redux/actions/authActions'; // imports the action we want to use
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends Component {
 	constructor(props) {
@@ -61,65 +61,43 @@ class Register extends Component {
 							<h1 className="display-4 text-center">Sign Up</h1>
 							<p className="lead text-center">Create your DevConnector account</p>
 							<form noValidate onSubmit={this.onSubmit}>
-								<div className="form-group">
-									<input
-										type="text"
-										className={classnames('form-control form-control-lg', {
-											'is-invalid': errors.name
-										})}
-										autoComplete="new-name"
-										placeholder="Name"
-										name="name"
-										value={name}
-										onChange={this.handleChange}
-									/>
-									{errors.name && <div className="invalid-feedback">{errors.name}</div>}
-								</div>
-								<div className="form-group">
-									<input
-										autoComplete="new-email"
-										type="email"
-										className={classnames('form-control form-control-lg', {
-											'is-invalid': errors.email
-										})}
-										placeholder="Email Address"
-										name="email"
-										value={email}
-										onChange={this.handleChange}
-									/>
-									{errors.email && <div className="invalid-feedback">{errors.email}</div>}
-									<small className="form-text text-muted">
-										This site uses Gravatar so if you want a profile image, use a Gravatar email
-									</small>
-								</div>
-								<div className="form-group">
-									<input
-										autoComplete="new-password"
-										type="password"
-										className={classnames('form-control form-control-lg', {
-											'is-invalid': errors.password
-										})}
-										placeholder="Password"
-										name="password"
-										value={password}
-										onChange={this.handleChange}
-									/>
-									{errors.password && <div className="invalid-feedback">{errors.password}</div>}
-								</div>
-								<div className="form-group">
-									<input
-										autoComplete="new-password"
-										type="password"
-										className={classnames('form-control form-control-lg', {
-											'is-invalid': errors.password2
-										})}
-										placeholder="Confirm Password"
-										name="password2"
-										value={password2}
-										onChange={this.handleChange}
-									/>
-									{errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
-								</div>
+								<TextFieldGroup
+									placeholder="Name..."
+									name="name"
+									type="name"
+									value={name}
+									handleChange={this.handleChange}
+									error={errors.name}
+									autoComplete="name"
+								/>
+								<TextFieldGroup
+									placeholder="Email..."
+									name="email"
+									type="email"
+									value={email}
+									handleChange={this.handleChange}
+									error={errors.email}
+									autoComplete="email"
+									info="This site uses Gravatar, please upload one if you want a profile image"
+								/>
+								<TextFieldGroup
+									placeholder="Password..."
+									name="password"
+									type="password"
+									value={password}
+									handleChange={this.handleChange}
+									error={errors.password}
+									autoComplete="password"
+								/>
+								<TextFieldGroup
+									placeholder="Please type your password again..."
+									name="password2"
+									type="password"
+									value={password2}
+									handleChange={this.handleChange}
+									error={errors.password2}
+									autoComplete="password"
+								/>
 								<input type="submit" className="btn btn-info btn-block mt-4" />
 							</form>
 						</div>

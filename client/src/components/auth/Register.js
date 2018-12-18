@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import classnames from 'classnames';
 import { connect } from 'react-redux'; // connects component to store
 import { registerUser } from '../../redux/actions/authActions'; // imports the action we want to use
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 class Register extends Component {
 	constructor(props) {
@@ -29,15 +30,23 @@ class Register extends Component {
 			password2
 		};
 
-		this.props.registerUser(newUser);
-		// axios
-		// 	.post('/api/users/register', newUser)
-		// 	.then((res) => console.log(res.data))
-		// 	.catch((err) => this.setState({ errors: err.response.data }));
+		this.props.registerUser(newUser, this.props.history); // use register user function from store and pass newUser
 	};
 
+	// get changes from this.props in redux state
+	static getDerivedStateFromProps(nextProps, prevState) {
+		return nextProps.errors ? { errors: nextProps.errors } : null;
+	}
+
+	// if component updated then send the new props to state
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.errors !== this.props.errors) {
+			this.setState({ errors: this.props.errors });
+		}
+	}
+
 	render() {
-		const { errors } = this.state;
+		const { errors, name, email, password, password2 } = this.state;
 		return (
 			<div className="register">
 				<div className="container">
@@ -55,7 +64,7 @@ class Register extends Component {
 										autoComplete="new-name"
 										placeholder="Name"
 										name="name"
-										value={this.state.name}
+										value={name}
 										onChange={this.handleChange}
 									/>
 									{errors.name && <div className="invalid-feedback">{errors.name}</div>}
@@ -69,7 +78,7 @@ class Register extends Component {
 										})}
 										placeholder="Email Address"
 										name="email"
-										value={this.state.email}
+										value={email}
 										onChange={this.handleChange}
 									/>
 									{errors.email && <div className="invalid-feedback">{errors.email}</div>}
@@ -86,7 +95,7 @@ class Register extends Component {
 										})}
 										placeholder="Password"
 										name="password"
-										value={this.state.password}
+										value={password}
 										onChange={this.handleChange}
 									/>
 									{errors.password && <div className="invalid-feedback">{errors.password}</div>}
@@ -100,7 +109,7 @@ class Register extends Component {
 										})}
 										placeholder="Confirm Password"
 										name="password2"
-										value={this.state.password2}
+										value={password2}
 										onChange={this.handleChange}
 									/>
 									{errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
@@ -115,4 +124,15 @@ class Register extends Component {
 	}
 }
 
-export default connect(null, { registerUser })(Register);
+Register.PropTypes = {
+	registerUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+	errors: state.errors
+});
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

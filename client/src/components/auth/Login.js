@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { loginUser } from '../../redux/actions';
+import { loginUser } from '../../redux/actions/authActions';
 
 class Login extends Component {
 	constructor(props) {
@@ -25,8 +25,31 @@ class Login extends Component {
 			email,
 			password
 		};
-		console.log(loginUser);
+		this.props.loginUser(loginUser);
 	};
+
+	componentDidMount() {
+		if (this.props.auth.isAuthenticated) {
+			this.props.history.push('/dashboard');
+		}
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors) {
+			return { errors: nextProps.errors };
+		}
+		return null;
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.errors !== this.props.errors) {
+			this.setState({ errors: this.props.errors });
+		}
+		if (this.props.auth.isAuthenticated) {
+			this.setState({ isAuthenticated: this.props.auth.isAuthenticated });
+			this.props.history.push('/dashboard');
+		}
+	}
 
 	render() {
 		const { email, password, errors } = this.state;

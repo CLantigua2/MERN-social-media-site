@@ -33,6 +33,12 @@ class Register extends Component {
 		this.props.registerUser(newUser, this.props.history); // use register user function from store and pass newUser
 	};
 
+	componentDidMount() {
+		if (this.props.auth.isAuthenticated) {
+			this.props.history.push('/dashboard');
+		}
+	}
+
 	// get changes from this.props in redux state
 	static getDerivedStateFromProps(nextProps, prevState) {
 		return nextProps.errors ? { errors: nextProps.errors } : null;
@@ -124,7 +130,7 @@ class Register extends Component {
 	}
 }
 
-Register.PropTypes = {
+Register.propTypes = {
 	registerUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired

@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import propTypes from 'prop-types';
 
-const InputGroup = ({ name, placeholder, value, error, type, autoComplete, icon, handleChange }) => {
+const InputGroup = ({ name, placeholder, value, error, type, autoComplete, icon, changeHandler }) => {
 	return (
 		<div className="input-group mb-3">
 			<div className="input-goup-prepend">
@@ -19,7 +19,7 @@ const InputGroup = ({ name, placeholder, value, error, type, autoComplete, icon,
 				type="text"
 				name={name}
 				value={value}
-				onChange={handleChange}
+				onChange={changeHandler}
 			/>
 
 			{error && <div className="invalid-feedback">{error}</div>}

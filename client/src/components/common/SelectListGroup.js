@@ -1,8 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const SelectListGroup = ({ name, value, error, info, handleChange, options }) => {
+const SelectListGroup = ({ name, value, error, info, changeHandler, options }) => {
 	const selectOptions = options.map((option) => (
 		<option key={option.label} value={option.value}>
 			{option.label}
@@ -16,7 +16,7 @@ const SelectListGroup = ({ name, value, error, info, handleChange, options }) =>
 				})}
 				name={name}
 				value={value}
-				onChange={handleChange}
+				onChange={changeHandler}
 			>
 				{selectOptions}
 			</select>
@@ -26,14 +26,13 @@ const SelectListGroup = ({ name, value, error, info, handleChange, options }) =>
 	);
 };
 
-SelectListGroup.protoTypes = {
-	name: propTypes.string.isRequired,
-	autoComplete: propTypes.string,
-	value: propTypes.string.isRequired,
-	info: propTypes.string,
-	error: propTypes.string,
-	handleChange: propTypes.func.isRequired,
-	options: propTypes.array.isRequired
+SelectListGroup.propTypes = {
+	name: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired,
+	info: PropTypes.string,
+	error: PropTypes.string,
+	changeHandler: PropTypes.func.isRequired,
+	options: PropTypes.array.isRequired
 };
 
 export default SelectListGroup;

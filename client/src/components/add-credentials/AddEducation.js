@@ -30,8 +30,8 @@ class AddEducation extends Component {
 		e.preventDefault();
 		const eduData = {
 			school: this.state.school,
-			degree: this.state.title,
-			fieldofstudy: this.state.location,
+			degree: this.state.degree,
+			fieldofstudy: this.state.fieldofstudy,
 			from: this.state.from,
 			to: this.state.to,
 			current: this.state.current,
@@ -117,16 +117,17 @@ class AddEducation extends Component {
 										id="current"
 									/>
 									<label htmlFor="current" className="form-check-label">
-										Current Job
+										Current
 									</label>
 								</div>
+
 								<TextAreaFieldGroup
-									placeholder="Job Description"
+									placeholder="Program Description"
 									name="description"
 									value={this.state.description}
 									handleChange={this.handleChange}
 									error={errors.description}
-									info="Tell us about the position"
+									info="Tell us about the program that you were in"
 								/>
 								<input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
 							</form>

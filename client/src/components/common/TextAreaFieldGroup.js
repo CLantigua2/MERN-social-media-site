@@ -20,7 +20,7 @@ const TextAreaFieldGroup = ({ name, placeholder, value, error, info, handleChang
 	);
 };
 
-TextAreaFieldGroup.protoTypes = {
+TextAreaFieldGroup.propTypes = {
 	name: propTypes.string.isRequired,
 	placeholder: propTypes.string,
 	value: propTypes.string.isRequired,

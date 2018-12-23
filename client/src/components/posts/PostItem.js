@@ -45,7 +45,8 @@ class PostItem extends Component {
 						{showActions ? (
 							<span>
 								<button
-									onClick={() => {
+									onClick={(e) => {
+										e.preventDefault();
 										this.onLikeClick(post._id);
 									}}
 									type="button"
@@ -59,7 +60,8 @@ class PostItem extends Component {
 									<span className="badge badge-light">{post.likes.length}</span>
 								</button>
 								<button
-									onClick={() => {
+									onClick={(e) => {
+										e.preventDefault();
 										this.onUnlikeClick(post._id);
 									}}
 									type="button"
@@ -72,7 +74,8 @@ class PostItem extends Component {
 								</Link>
 								{post.user === auth.user.id ? (
 									<button
-										onClick={() => {
+										onClick={(e) => {
+											e.preventDefault();
 											this.onDeleteClick(post._id);
 										}}
 										type="button"

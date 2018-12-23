@@ -25,7 +25,6 @@ class ProfileGithub extends Component {
 	render() {
 		const { repos } = this.state;
 		let repoItems;
-
 		if (repos) {
 			repoItems = repos.slice(0, 5).map((repo) => (
 				<div key={repo.id} className="card card-body mb-2">
@@ -52,7 +51,7 @@ class ProfileGithub extends Component {
 		return (
 			<div ref="myRef">
 				<hr />
-				<h3 className="mb-4">Latest Github Repos</h3>
+				<h3 className="mb-4">Latest Github Repos </h3>
 				{repoItems ? repoItems : undefined}
 			</div>
 		);

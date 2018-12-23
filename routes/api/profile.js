@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const request = require('request');
 
 // Load Validation
 const validateProfileInput = require('../../validation/profile');
@@ -257,6 +258,34 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 	Profile.findOneAndRemove({ user: req.user.id }).then(() => {
 		User.findOneAndRemove({ _id: req.user.id }).then(() => res.json({ success: true }));
 	});
+});
+
+// @route       GET api/profile/github/:username/:count/:sort
+// @desc        Get github data from github api
+// @access      Public
+// @route       GET api/profile/github/:username/:count/:sort
+// @desc        Get github data from github api
+// @access      Public
+router.get('/github/:username', (req, res) => {
+	username = req.params.username;
+	clientId = '95620d62cc0b69f9744d';
+	clientSecret = 'f03217a9a67d4f9825eedefa6dfbab614e6693e7';
+	count = 5;
+	sort = 'created: asc';
+	const options = {
+		url: `https://api.github.com/users/${username}/repos?per_page=${count}&sort=${sort}&client_id=${clientId}&client_secret=${clientSecret}`,
+		headers: {
+			'User-Agent': 'request'
+		}
+	};
+	function callback(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			const info = JSON.parse(body);
+			res.json(info);
+		}
+	}
+	// using request API
+	request(options, callback);
 });
 
 module.exports = router;

@@ -40,9 +40,9 @@ class ProfileGithub extends Component {
 							<p>{repo.description}</p>
 						</div>
 						<div className="col-md-6">
-							<p>Stars: {repo.stargazers_count}</p>
-							<p>Watchers: {repo.watchers_count}</p>
-							<p>Forks: {repo.forks_count}</p>
+							<span className="badge badge-info mr-3 p-2">Stars: {repo.stargazers_count}</span>
+							<span className="badge badge-secondary mr-3 p-2">Watchers: {repo.watchers_count}</span>
+							<span className="badge badge-success p-2">Forks: {repo.forks_count}</span>
 						</div>
 					</div>
 				</div>
@@ -58,5 +58,9 @@ class ProfileGithub extends Component {
 		);
 	}
 }
+
+ProfileGithub.propTypes = {
+	username: PropTypes.string.isRequired
+};
 
 export default ProfileGithub;

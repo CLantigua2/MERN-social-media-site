@@ -9,7 +9,7 @@ export default combineReducers({
 	auth: authReducer,
 	errors: errorReducer,
 	profile: profileReducer,
-	posts: postReducer
+	post: postReducer
 });
 
 // this file is used to take in all of the separate reducers and combine them then export them as an object

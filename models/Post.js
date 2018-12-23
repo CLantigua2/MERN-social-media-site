@@ -2,25 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-
 const PostSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
-		res: 'users'
+		ref: 'users'
 	},
 	text: {
 		type: String,
 		required: true
 	},
-	// name and avatar populated so that if a user deletes an account,
-	// their posts will still be there
 	name: {
 		type: String
 	},
 	avatar: {
 		type: String
 	},
-	// link users to likes by thier user id
 	likes: [
 		{
 			user: {
@@ -33,7 +29,7 @@ const PostSchema = new Schema({
 		{
 			user: {
 				type: Schema.Types.ObjectId,
-				refs: 'users'
+				ref: 'users'
 			},
 			text: {
 				type: String,
@@ -45,13 +41,13 @@ const PostSchema = new Schema({
 			avatar: {
 				type: String
 			},
-			data: {
+			date: {
 				type: Date,
 				default: Date.now
 			}
 		}
 	],
-	data: {
+	date: {
 		type: Date,
 		default: Date.now
 	}

@@ -12,8 +12,12 @@ import { getProfileByHandle } from '../../redux/actions/profileActions';
 class Profile extends Component {
 	componentDidMount() {
 		const { handle } = this.props.match.params;
-		if (handle) {
-			this.props.getProfileByHandle(handle);
+		handle && this.props.getProfileByHandle(handle);
+	}
+
+	componentDidUpdate(nextProps) {
+		if (nextProps.profile.profile === null && this.props.profile.loading) {
+			this.props.history.push('/not-found');
 		}
 	}
 

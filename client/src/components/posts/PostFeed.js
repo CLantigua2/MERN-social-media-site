@@ -5,7 +5,7 @@ import PostItem from './PostItem';
 class PostFeed extends Component {
 	render() {
 		const { posts } = this.props;
-
+		// map through post item component in reverse to put new posts on the bottom
 		return posts.map((post) => <PostItem key={post._id} post={post} />).reverse();
 	}
 }

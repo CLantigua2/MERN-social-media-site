@@ -22,9 +22,9 @@ export const addPost = (postData) => (dispatch) => {
 };
 
 // Get Posts
-export const getPosts = (load = true) => (dispatch) => {
-	if (load) dispatch(setPostLoading);
-	axios
+export const getPosts = (load = true) => async (dispatch) => {
+	if (load) await dispatch(setPostLoading);
+	await axios
 		.get('/api/posts')
 		.then((res) =>
 			dispatch({

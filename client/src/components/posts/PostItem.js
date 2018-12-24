@@ -78,16 +78,6 @@ class PostItem extends Component {
 										<span className="badge badge-light">{post.likes.length}</span>
 									</button>
 								)}
-								{/* <button
-									onClick={(e) => {
-										e.preventDefault();
-										this.onUnlikeClick(post._id);
-									}}
-									type="button"
-									className="btn btn-light mr-1"
-								>
-									<i className="text-secondary fas fa-thumbs-down" />
-								</button> */}
 								<Link to={`/post/${post._id}`} className="btn btn-info mr-1">
 									Comments
 								</Link>

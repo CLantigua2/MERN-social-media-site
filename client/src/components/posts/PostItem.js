@@ -6,15 +6,20 @@ import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../redux/actions/postActions';
 
 class PostItem extends Component {
+	state = {
+		liked: false
+	};
 	onDeleteClick = (id) => {
 		this.props.deletePost(id);
 	};
 
 	onLikeClick = (id) => {
+		this.setState({ liked: true });
 		this.props.addLike(id);
 	};
 
 	onUnlikeClick = (id) => {
+		this.setState({ liked: false });
 		this.props.removeLike(id);
 	};
 
@@ -29,7 +34,7 @@ class PostItem extends Component {
 
 	render() {
 		const { post, auth, showActions } = this.props;
-
+		const { liked } = this.state;
 		return (
 			<div className="card card-body mb-3">
 				<div className="row">
@@ -44,22 +49,36 @@ class PostItem extends Component {
 						<p className="lead">{post.text}</p>
 						{showActions ? (
 							<span>
-								<button
-									onClick={(e) => {
-										e.preventDefault();
-										this.onLikeClick(post._id);
-									}}
-									type="button"
-									className="btn btn-light mr-1"
-								>
-									<i
-										className={classnames('fas fa-thumbs-up', {
-											'text-info': this.findUserLike(post.likes)
-										})}
-									/>
-									<span className="badge badge-light">{post.likes.length}</span>
-								</button>
-								<button
+								{liked === false ? (
+									<button
+										onClick={(e) => {
+											e.preventDefault();
+											this.onLikeClick(post._id);
+										}}
+										type="button"
+										className="btn btn-light mr-4"
+									>
+										<i
+											className="fas fa-thumbs-up"
+											onClick={() => {
+												this.findUserLike(post.likes);
+											}}
+										/>
+									</button>
+								) : (
+									<button
+										onClick={(e) => {
+											e.preventDefault();
+											this.onUnlikeClick(post._id);
+										}}
+										type="button"
+										className="btn btn-light mr-2"
+									>
+										<i className="text-primary fas fa-thumbs-up" />
+										<span className="badge badge-light">{post.likes.length}</span>
+									</button>
+								)}
+								{/* <button
 									onClick={(e) => {
 										e.preventDefault();
 										this.onUnlikeClick(post._id);
@@ -68,7 +87,7 @@ class PostItem extends Component {
 									className="btn btn-light mr-1"
 								>
 									<i className="text-secondary fas fa-thumbs-down" />
-								</button>
+								</button> */}
 								<Link to={`/post/${post._id}`} className="btn btn-info mr-1">
 									Comments
 								</Link>

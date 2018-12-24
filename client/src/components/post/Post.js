@@ -6,6 +6,7 @@ import { getPost } from '../../redux/actions/postActions';
 import PostItem from '../posts/PostItem';
 import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
+import CommentFeed from './CommentFeed';
 
 class Post extends Component {
 	componentDidMount() {
@@ -21,6 +22,7 @@ class Post extends Component {
 			postContent = (
 				<div>
 					<PostItem post={post} showActions={false} />
+					<CommentFeed postId={post._id} comments={post.comments} />
 					<CommentForm postId={post._id} />
 				</div>
 			);

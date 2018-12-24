@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 const request = require('request');
+const keys = require('../../config/keys');
 
 // Load Validation
 const validateProfileInput = require('../../validation/profile');
@@ -268,8 +269,8 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 // @access      Public
 router.get('/github/:username', (req, res) => {
 	username = req.params.username;
-	clientId = '95620d62cc0b69f9744d';
-	clientSecret = 'f03217a9a67d4f9825eedefa6dfbab614e6693e7';
+	clientId = keys.clientId;
+	clientSecret = keys.clientSecret;
 	count = 5;
 	sort = 'created: asc';
 	const options = {

@@ -10,7 +10,6 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './redux/actions/authActions';
 import { clearCurrentProfile } from './redux/actions/profileActions';
-import { ParallaxProvider } from 'react-scroll-parallax';
 
 // Check for token
 if (localStorage.jwt) {
@@ -37,9 +36,7 @@ if (localStorage.jwt) {
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<ParallaxProvider>
-				<App />
-			</ParallaxProvider>
+			<App />
 		</Router>
 	</Provider>,
 	document.getElementById('root')

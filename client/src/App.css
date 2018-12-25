@@ -21,9 +21,9 @@ img {
   background: url('./img/showcase.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 900px;
   margin-top: -24px;
-  margin-bottom: -50px;
+  margin-bottom: 72px;
 }
 
 .landing-inner {
@@ -39,6 +39,14 @@ img {
   height: 100%;
 }
 
+.second-landing {
+  position: relative;
+  background: url('./img/secondshowcase.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 600px;
+}
+
 .card-form {
   opacity: 0.9;
 }
@@ -52,3 +60,23 @@ img {
   color: #bbb !important;
 }
 
+.nav-wrapper {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  width: 100%;
+  margin-bottom: 0;
+  z-index: 1;
+}
+
+.main {
+  margin-top: 50px;
+  height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+}

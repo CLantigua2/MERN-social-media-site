@@ -14,7 +14,7 @@ class Navbar extends Component {
 	render() {
 		const { isAuthenticated, user } = this.props.auth;
 		const authLinks = (
-			<ul className="navbar-nav ml-auto">
+			<ul className="navbar-nav ml-auto navbar-fixed-top">
 				<li className="nav-item">
 					<NavLink className="nav-link" to="/feed">
 						Post Feed
@@ -54,10 +54,10 @@ class Navbar extends Component {
 			</ul>
 		);
 		return (
-			<nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+			<nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
 				<div className="container">
 					<NavLink className="navbar-brand" to="/">
-						DevConnector
+						{isAuthenticated === false ? 'DevSocial' : 'Dashboard'}
 					</NavLink>
 					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
 						<span className="navbar-toggler-icon" />
